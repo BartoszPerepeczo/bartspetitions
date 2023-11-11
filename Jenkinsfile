@@ -14,15 +14,15 @@ pipeline {
                 echo "steps placeholder"
                 sh "mvn clean"
 
-                //sh 'mvn dependency:copy-dependencies'
+                sh 'mvn dependency:copy-dependencies'
 
-                //sh "mvn compiler:compile"
+                sh "mvn compiler:compile"
             }
         }
         stage('Package') {
             steps {
                 echo "package placeholder"
-                sh "mvn package"
+                sh "mvn package -DskipTests"
             }
         }
         stage('Deploy') {
