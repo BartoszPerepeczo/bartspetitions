@@ -7,7 +7,8 @@ pipeline {
         stage('GetProject') {
             steps {
                 echo "get project placeholder"
-                git 'https://github.com/BartoszPerepeczo/bartspetition'
+                git 'https://github.com/BartoszPerepeczo/CT5171_test1Maven'
+                //git 'https://github.com/BartoszPerepeczo/bartspetition'
             }
         }
         stage('Build') {
