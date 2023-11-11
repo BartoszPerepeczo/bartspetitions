@@ -5,10 +5,7 @@ pipeline {
         stage('GetProject') {
             steps {
                 echo "get project placeholder"
-                git (
-                    url : 'https://github.com/BartoszPerepeczo/bartspetition',
-                    branch : master
-                )
+                git 'https://github.com/BartoszPerepeczo/bartspetition'
             }
         }
         stage('Build') {
