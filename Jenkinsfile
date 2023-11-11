@@ -4,15 +4,17 @@ pipeline {
     stages {
         stage('GetProject') {
             steps {
-                git (
-                    url : 'https://github.com/BartoszPerepeczo/bartspetition',
-                    branch : master
-                )
+                echo "get project placeholder"
+                //git (
+                //    url : 'https://github.com/BartoszPerepeczo/bartspetition',
+                //    branch : master
+                //)
             }
         }
         stage('Build') {
             steps {
-                sh "mvn clean"
+                echo "steps placeholder"
+                //sh "mvn clean"
 
                 //sh 'mvn dependency:copy-dependencies'
 
@@ -21,7 +23,8 @@ pipeline {
         }
         stage('Package') {
             steps {
-                sh "mvn package"
+                echo "package placeholder"
+                //sh "mvn package"
             }
         }
         stage('Deploy') {
