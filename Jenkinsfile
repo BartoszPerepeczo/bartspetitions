@@ -11,23 +11,17 @@ pipeline {
         }
         stage('Build') {
             steps {
-                echo "steps placeholder"
                 sh "mvn clean:clean"
-
-                //sh 'mvn dependency:copy-dependencies'
-
-                //sh "mvn compiler:compile"
             }
         }
         stage('Package') {
             steps {
-                echo "package placeholder"
                 sh "mvn package"
             }
         }
         stage('Deploy') {
             steps {
-                echo "deploy placeholder"
+                sh 'docker build -f Dockerfile -t myapp .'
             }
         }
 
