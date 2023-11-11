@@ -12,17 +12,24 @@ pipeline {
         stage('Build') {
             steps {
                 echo "steps placeholder"
-                sh "mvn clean"
+                sh "mvn clean:clean"
 
-                sh 'mvn dependency:copy-dependencies'
+                //sh 'mvn dependency:copy-dependencies'
 
-                sh "mvn compiler:compile"
+                //sh "mvn compiler:compile"
             }
         }
         stage('Package') {
             steps {
                 echo "package placeholder"
-                sh "mvn package -DskipTests"
+                sh "mvn package"
+            }
+        }
+        stage ('Archive') {
+            steps {
+                echo "archive placeholder"
+                archiveArtifacts allowEmptyArchive: true,
+                artifacts: '**/demo*.war'
             }
         }
         stage('Deploy') {
