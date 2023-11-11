@@ -1,11 +1,15 @@
 pipeline {
     agent any
-
+    options {
+        skipDefaultCheckout(true)
+    }
     stages {
         stage('GetProject') {
             steps {
                 echo "get project placeholder"
-                git 'https://github.com/BartoszPerepeczo/bartspetition'
+                git {
+                    url : 'https://github.com/BartoszPerepeczo/bartspetition',
+
             }
         }
         stage('Build') {
