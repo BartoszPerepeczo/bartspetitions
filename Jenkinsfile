@@ -25,7 +25,8 @@ pipeline {
             }
         }
         Stage('Deploy') {
-
+            steps {
+            }
         }
 
     }
