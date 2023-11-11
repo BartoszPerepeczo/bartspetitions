@@ -24,7 +24,7 @@ pipeline {
                 sh "mvn package"
             }
         }
-        Stage('Deploy') {
+        stage('Deploy') {
             steps {
                 echo "deploy placeholder"
             }
