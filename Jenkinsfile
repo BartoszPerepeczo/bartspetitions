@@ -35,7 +35,7 @@ pipeline {
     post {
         success {
              archiveArtifacts allowEmptyArchive: true,
-             artifacts: '**/bartspetitions*.jar'
+             artifacts: '**/bartspetitions*.war'
         }
     }
 }
