@@ -25,18 +25,17 @@ pipeline {
                 sh "mvn package"
             }
         }
-        stage ('Archive') {
-            steps {
-                echo "archive placeholder"
-                archiveArtifacts allowEmptyArchive: true,
-                artifacts: '**/demo*.war'
-            }
-        }
         stage('Deploy') {
             steps {
                 echo "deploy placeholder"
             }
         }
 
+    }
+    post {
+        success {
+             archiveArtifacts allowEmptyArchive: true,
+             artifacts: '**/bartspetitions*.jar'
+        }
     }
 }
