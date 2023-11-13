@@ -21,6 +21,7 @@ pipeline {
         }
         stage('Deploy') {
             steps {
+                sh 'sudo chmod 666 /var/run/docker.sock'
                 sh 'docker build -f Dockerfile -t myapp .'
                 sh 'docker rm -f "myappcontainer" || true'
                 sh 'docker run --name "myappcontainer" -p 8081:8080 --detach myapp:latest'
