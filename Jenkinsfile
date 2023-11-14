@@ -24,15 +24,17 @@ pipeline {
             }
         }
         stage('InteractWithUser') {
-            script {
-              env.DEPLOYMENT = input message: 'Please Confirm if you want to Deploy the App:',
-                                 parameters: [booleanParam(defaultValue: false,
-                                              description: 'Confirmation of deployment.',
-                                              name: 'Deployment')]
-              env.PASSWORD = input message: 'Please enter the password',
-                                 parameters: [password(defaultValue: '',
-                                              description: '',
-                                              name: 'Password')]
+            steps {
+                script {
+                  env.DEPLOYMENT = input message: 'Please Confirm if you want to Deploy the App:',
+                                     parameters: [booleanParam(defaultValue: false,
+                                                  description: 'Confirmation of deployment.',
+                                                  name: 'Deployment')]
+                  env.PASSWORD = input message: 'Please enter the password',
+                                     parameters: [password(defaultValue: '',
+                                                  description: '',
+                                                  name: 'Password')]
+                }
             }
         }
         stage('Deploy') {
