@@ -1,8 +1,8 @@
 pipeline {
     agent any
-    options {
-        skipDefaultCheckout(true)
-    }
+    //options {
+    //    skipDefaultCheckout(true)
+    //}
     //parameters {
     //    booleanParam(name: 'DEPLOYMENT', defaultValue: false, description: 'Would you like to deploy')
     //    password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password for deployment')
