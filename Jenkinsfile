@@ -23,26 +23,35 @@ pipeline {
                 sh "mvn package"
             }
         }
-        stage('InteractWithUser') {
+        stage('ConfirmDeployment') {
             steps {
                 script {
-                  env.DEPLOYMENT = input message: 'Please Confirm if you want to Deploy the App:',
+                    env.DEPLOYMENT = input message: 'Please Confirm if you want to Deploy the App:',
                                      parameters: [booleanParam(defaultValue: false,
                                                   description: 'Confirmation of deployment.',
                                                   name: 'Deployment')]
-                  env.PASSWORD = input message: 'Please enter the password',
-                                     parameters: [password(defaultValue: '',
-                                                  description: '',
-                                                  name: 'Password')]
                 }
             }
         }
+        //stage('CheckForPassword') {
+        //    when {
+        //        equals expected: 'true', actual: "${env.DEPLOYMENT}"
+        //    }
+        //    steps {
+        //        script {
+        //            env.PASSWORD = input message: 'Please enter the password',
+        //                             parameters: [password(defaultValue: '',
+        //                                          description: '',
+        //                                          name: 'Password')]
+        //        }
+        //    }
+        //}
         stage('Deploy') {
             when {
-                equals expected: true, actual: "${env.DEPLOYMENT}"
+                equals expected: 'true', actual: "${env.DEPLOYMENT}"
             }
             steps {
-                sh 'echo ${env.PASSWORD} | sudo -S chmod 666 /var/run/docker.sock'
+                //sh "sudo -S <<< \"${env.PASSWORD}\" chmod 666 /var/run/docker.sock"
                 //sh 'sudo chmod 666 /var/run/docker.sock'
                 sh 'docker build -f Dockerfile -t myapp .'
                 sh 'docker rm -f "myappcontainer" || true'
