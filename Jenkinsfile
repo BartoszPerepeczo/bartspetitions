@@ -3,6 +3,10 @@ pipeline {
     options {
         skipDefaultCheckout(true)
     }
+    parameters {
+        booleanParam(name: 'DEPLOYMENT', defaultValue: false, description: 'Would you like to deploy')
+        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password for deployment')
+    }
     stages {
         stage('GetProject') {
             steps {
@@ -20,7 +24,11 @@ pipeline {
             }
         }
         stage('Deploy') {
+            when {
+                equals expected: true, actual: "${params.DEPLOYMENT}"
+            }
             steps {
+                sh 'echo ${params.PASSWORD} | sudo -S chmod 666 /var/run/docker.sock'
                 //sh 'sudo chmod 666 /var/run/docker.sock'
                 sh 'docker build -f Dockerfile -t myapp .'
                 sh 'docker rm -f "myappcontainer" || true'
