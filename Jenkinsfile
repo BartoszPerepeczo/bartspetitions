@@ -23,7 +23,7 @@ pipeline {
                 sh "mvn package"
             }
         }
-        Stage('InteractWithUser') {
+        stage('InteractWithUser') {
             script {
               env.DEPLOYMENT = input message: 'Please Confirm if you want to Deploy the App:',
                                  parameters: [booleanParam(defaultValue: false,
