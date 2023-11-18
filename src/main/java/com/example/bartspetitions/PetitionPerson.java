@@ -6,7 +6,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 
 @Entity
-public class Petition_Signee {
+public class PetitionPerson {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -14,9 +14,9 @@ public class Petition_Signee {
     private Long petitionId;
     private Long signeeId;
 
-    protected Petition_Signee() {}
+    protected PetitionPerson() {}
 
-    public Petition_Signee(Long petitionId, Long signeeId) {
+    public PetitionPerson(Long petitionId, Long signeeId) {
         this.petitionId = petitionId;
         this.signeeId = signeeId;
     }
