@@ -26,6 +26,7 @@
                                     <label for="searchString" class="m-2">Search</label>
                                     <input name="search" type="text" class="m-2" id="searchString" placeholder="Search for..." th:value=${search}>
                                     <button type="submit" value="Submit" class="btn btn-info m-2">Search for a Petition</button>
+                                    <a th:if="${search!=''}" th:href="@{/petitionList}" class="btn btn-info m-2">List All Petitions</a>
                                     <a th:href="@{/petitionAdd}" class="btn btn-success m-2">Add a New Petition</a>
                                 </form>
                             </div>

@@ -22,10 +22,10 @@
                         <div class="card-footer">
                             <div class="container-fluid">
                                 <form class="form-inline" action="#" th:action="@{/petitionList}" method="get">
-                                    <a th:href="@{/petitionList}" class="btn btn-info m-2">List All Petitions</a>
                                     <label for="searchString" class="m-2">Search</label>
                                     <input name="search" type="text" class="m-2" id="searchString" placeholder="Search for...">
                                     <button type="submit" value="Submit" class="btn btn-info m-2">Search for a Petition</button>
+                                    <a th:href="@{/petitionList}" class="btn btn-info m-2">List All Petitions</a>
                                     <a th:href="@{/petitionAdd}" class="btn btn-success m-2">Add a New Petition</a>
                                 </form>
                             </div>

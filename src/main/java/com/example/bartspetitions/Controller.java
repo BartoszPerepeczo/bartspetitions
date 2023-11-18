@@ -3,13 +3,16 @@ package com.example.bartspetitions;
 
 import com.example.bartspetitions.model.*;
 import com.example.bartspetitions.repository.*;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.web.servlet.server.Session;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.View;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,14 +38,34 @@ public class Controller {
 
     @GetMapping("/petitionAdd")
     public String petitionAdd(
-            @RequestParam(value = "message", required = false) String message,
             Model model
     ) {
-        List<com.example.bartspetitions.model.Petition> petitions = new ArrayList<>();
-        petitionRepository.findAll().forEach(petitions::add);
-        model.addAttribute("list", petitions);
-        //model.addAttribute("message", message);
-        return "petitionList";
+        return "petitionAdd";
+    }
+
+    @PostMapping("/petitionAdd")
+    public ModelAndView petitionAdd(
+            @RequestParam(value = "petitionTitle", required = true) String petitionTitle,
+            @RequestParam(value = "petitionSummary", required = true) String petitionSummary,
+            @RequestParam(value = "petitionText", required = true) String petitionText,
+            @RequestParam(value = "personName", required = true) String personName,
+            @RequestParam(value = "personEmail", required = true) String personEmail,
+            Model model, RedirectAttributes attributes,
+            HttpServletRequest request ) {
+
+        Person person = personRepository.findByPersonNameAndPersonEmail(personName,personEmail);
+        if (person==null) {
+            personRepository.save(new Person(personName,personEmail));
+            person = personRepository.findByPersonNameAndPersonEmail(personName,personEmail);
+        }
+
+        Petition petition = new Petition(person.getId(),petitionTitle,petitionSummary,petitionText);
+        petitionRepository.save(petition);
+        petitionPersonRepository.save(new PetitionPerson(petition.getId(), person.getId()));
+
+        request.setAttribute(View.RESPONSE_STATUS_ATTRIBUTE, HttpStatus.TEMPORARY_REDIRECT);
+        attributes.addAttribute("id", String.valueOf(petition.getId()));
+        return new ModelAndView("redirect:/petitionSign");
     }
 
     @GetMapping("/petitionList")
@@ -68,25 +91,12 @@ public class Controller {
         return "petitionList";
     }
 
-    /*@GetMapping("/petitionSearch")
-    public String petitionSearch(
-            @RequestParam(value = "message", required = false) String message,
-            Model model
-    ) {
-        List<com.example.bartspetitions.model.Petition> petitions = new ArrayList<>();
-        petitionRepository.findAll().forEach(petitions::add);
-        model.addAttribute("list", petitions);
-        //model.addAttribute("message", message);
-        return "petitionList";
-    }*/
-
-
     @GetMapping("/petitionSign")
     public String petitionSign(
             @RequestParam(value = "id", required = true) String id,
             Model model
     ) {
-        com.example.bartspetitions.model.Petition petition = this.petitionRepository.findById(Long.parseLong(id));
+        Petition petition = this.petitionRepository.findById(Long.parseLong(id));
 
         //List<Tuple> personIds = petitionPersonRepository.findByPetitionIdEquals(Long.parseLong(id));
         //List<Person> person = petitionPersonRepository.findByPetitionIdEquals(Long.parseLong(id));
@@ -107,7 +117,7 @@ public class Controller {
     }
 
     @PostMapping("/petitionSign")
-    public String petitionSign(
+    public ModelAndView petitionSign(
             @RequestParam(value = "id", required = true) String id,
             @RequestParam(value = "personName", required = false) String personName,
             @RequestParam(value = "personEmail", required = false) String personEmail,
@@ -122,23 +132,10 @@ public class Controller {
         petitionPersonRepository.save(new PetitionPerson(Long.parseLong(id), person.getId()));
 
         model.addAttribute("petition", petition);
+        model.addAttribute("personName", personName);
+        model.addAttribute("personEmail", personEmail);
 
-        //List<Tuple> personIds = petitionPersonRepository.findByPetitionIdEquals(Long.parseLong(id));
-        //List<Person> person = petitionPersonRepository.findByPetitionIdEquals(Long.parseLong(id));
-        //String personString = person.toString();
-/*
-        if(!person.isEmpty()) {
-            for (Tuple t : personIds) {
-                person += t.toString();
-
-                //Long id = (Long) t.get(0);
-                //Long version = (Long) t.get(1);
-            }
-            //person.addAll(personRepository.findByIdIn(personIds));
-        }*/
-        // model.addAttribute("person", person);//.toString());
-
-        return "petitionSign";
+        return new ModelAndView("petitionSign");
     }
 
 }
