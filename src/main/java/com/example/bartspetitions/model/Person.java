@@ -1,4 +1,4 @@
-package com.example.bartspetitions;
+package com.example.bartspetitions.model;
 
 import jakarta.persistence.*;
 
@@ -21,8 +21,8 @@ public class Person {
     @Override
     public String toString() {
         return String.format(
-                "User[id=%d, personName='%s', personEmail='%s']",
-                id, personName, personEmail);
+                "%s (%s)",
+                personName, personEmail);
     }
 
     public Long getId() {

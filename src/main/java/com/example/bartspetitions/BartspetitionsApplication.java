@@ -1,5 +1,9 @@
 package com.example.bartspetitions;
 
+import com.example.bartspetitions.model.PetitionPerson;
+import com.example.bartspetitions.repository.PersonRepository;
+import com.example.bartspetitions.repository.PetitionPersonRepository;
+import com.example.bartspetitions.repository.PetitionRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,16 +21,16 @@ public class BartspetitionsApplication {
 
 
 	@Bean
-	public CommandLineRunner demo(PetitionRepository petitionRepository, PersonRepository personRepository) {
+	public CommandLineRunner demo(PetitionRepository petition, PersonRepository person, PetitionPersonRepository petitionPersonRepository) {
 		return (args) -> {
 			// save a few Users
-			personRepository.save(new Person("Jack", "jack@gmail.com"));
-			personRepository.save(new Person("Jill", "j97@hotmail.com"));
-			personRepository.save(new Person("Padraig", "P.Mullen17@universityofgallwaygmail.com"));
-			personRepository.save(new Person("Steve", "stevetheboss@gmail.com"));
+			person.save(new com.example.bartspetitions.model.Person("Jack", "jack@gmail.com"));
+			person.save(new com.example.bartspetitions.model.Person("Jill", "j97@hotmail.com"));
+			person.save(new com.example.bartspetitions.model.Person("Padraig", "P.Mullen17@universityofgallway.ie"));
+			person.save(new com.example.bartspetitions.model.Person("Steve", "stevetheboss@gmail.com"));
 
 			// save a few Petitions
-			petitionRepository.save(new Petition(1L,"Save the Whales", "The effects of nearly a century of commercial whaling have had long-lasting effects. Luckily, a 1986 ban made commercial whaling illegal worldwide. But there is still work to be done to save the whales.","A few countries — namely Japan, Norway, and Iceland — continue to ignore a 1986 moratorium on commercial whaling. Every year, these three countries kill thousands of whales, selling their meat on an illegal black market.\n" +
+			petition.save(new com.example.bartspetitions.model.Petition(1L,"Save the Whales", "The effects of nearly a century of commercial whaling have had long-lasting effects. Luckily, a 1986 ban made commercial whaling illegal worldwide. But there is still work to be done to save the whales.","A few countries — namely Japan, Norway, and Iceland — continue to ignore a 1986 moratorium on commercial whaling. Every year, these three countries kill thousands of whales, selling their meat on an illegal black market.\n" +
 					"\n" +
 					"For more than 40 years we’ve been at the forefront of this evolving fight to end this needless slaughter of one the most magnificent creatures on the planet.\n" +
 					"\n" +
@@ -49,17 +53,28 @@ public class BartspetitionsApplication {
 					"\n" +
 					"Calling All Whale Defenders\n" +
 					"We’re not backing down in our efforts to protect whales until this shameful and unnecessary slaughter has been stopped and whales can once again roam the seas in freedom. Are you with us?"));
-			petitionRepository.save(new Petition(2L,"Four Day Week Ireland", "As global leaders in reduced" +
+			petition.save(new com.example.bartspetitions.model.Petition(2L,"Four Day Week Ireland", "As global leaders in reduced" +
 					" work time, we are passionate about helping businesses, individuals, and governments work towards" +
 					" a future where productivity is prioritised over working hours, and work/life balance can be" +
 					" improved without sacrificing business results. We have worked with dozens of organisations" +
 					" across the world to implement shorter work weeks with outstanding results. Now we want to help" +
 					" you get there too.",""));
-			petitionRepository.save(new Petition(3L,"Ending Nuclear Tests", "Nuclear testing is a key step" +
+			petition.save(new com.example.bartspetitions.model.Petition(3L,"Ending Nuclear Tests", "Nuclear testing is a key step" +
 					" in the development of nuclear weapons. By ending this, the CTBT curbs all nuclear arms" +
 					" proliferation, be it the development of nuclear weapons by countries that do not currently have" +
 					" them, upgrades to current nuclear arsenals or the creation of new, more advanced generations of" +
 					" nuclear weapons.",""));
+			// Save a few signatures
+			petitionPersonRepository.save(new PetitionPerson(1L,1L));
+			petitionPersonRepository.save(new PetitionPerson(1L,2L));
+			petitionPersonRepository.save(new PetitionPerson(1L,4L));
+			petitionPersonRepository.save(new PetitionPerson(2L,2L));
+			petitionPersonRepository.save(new PetitionPerson(2L,3L));
+			petitionPersonRepository.save(new PetitionPerson(3L,1L));
+			petitionPersonRepository.save(new PetitionPerson(3L,3L));
+			petitionPersonRepository.save(new PetitionPerson(3L,4L));
+			petitionPersonRepository.save(new PetitionPerson(4L,1L));
+
 /*
 			// fetch all petitions
 			log.info("Petitions found with findAll():");

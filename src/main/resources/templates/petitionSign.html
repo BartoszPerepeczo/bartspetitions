@@ -15,22 +15,25 @@
                     <h2>Bartspetitions - List of Petitions</h2>
                 </div>
                 <div class="card">
-                    <a th:href="@{/homePage}" class= "btn btn-primary">Home</a>
-                    <a th:href="@{/petitionAdd}" class= "btn btn-success">New Petition</a>
-                    <a th:href="@{/petitionSearch}" class= "btn btn-info">New Petition</a>
+                    <a th:href="@{/}" class="btn btn-primary">Home</a>
+                    <a th:href="@{/petitionAdd}" class="btn btn-success">New Petition</a>
+                    <a th:href="@{/petitionSearch}" class="btn btn-info">New Petition</a>
                 </div>
             </div>
-            <div th:each="ob:${list}">
+            <div>
                 <div class="card">
                     <div class="card-header text-centre">
-                        <h3 th:text=${ob.petitionTitle}></h3>
+                        <h3 th:text=${petition.petitionTitle}></h3>
                     </div>
                     <div class="card-body">
-                        <p th:text=${ob.petitionText}></p>
-
+                        <p class="card-text" th:text=${petition.petitionText}></p>
+                        <p class="card-text">
+                            <small class="text-muted">Signed By:</small>
+                            <small th:text=${person}></small>
+                        </p>
                     </div>
                     <div class="card-footer bg-white text-success"> <!--th:if="${test!=null}">-->
-                        <a th:href="@{/petitionSign(id=${ob.id})}" class="btn btn-primary">View Petition</a>
+                        <a th:href="@{/petitionSign(id=${petition.id})}" class="btn btn-primary">View Petition</a>
                     </div>
                 </div>
             </div>

@@ -1,4 +1,4 @@
-package com.example.bartspetitions;
+package com.example.bartspetitions.model;
 
 import jakarta.persistence.*;
 

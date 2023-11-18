@@ -1,4 +1,4 @@
-package com.example.bartspetitions;
+package com.example.bartspetitions.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -12,20 +12,20 @@ public class PetitionPerson {
     @GeneratedValue(strategy= GenerationType.AUTO)
     private Long id;
     private Long petitionId;
-    private Long signeeId;
+    private Long personId;
 
     protected PetitionPerson() {}
 
-    public PetitionPerson(Long petitionId, Long signeeId) {
+    public PetitionPerson(Long petitionId, Long personId) {
         this.petitionId = petitionId;
-        this.signeeId = signeeId;
+        this.personId = personId;
     }
 
     @Override
     public String toString() {
         return String.format(
-                "Petition_User[Id=%d, petition_Id=%d, user_Id='%d']",
-                id, petitionId, signeeId);
+                "PetitionPerson[Id=%d, petition_Id=%d, user_Id='%d']",
+                id, petitionId, personId);
     }
     public Long getPetition_Id() {
         return petitionId;
@@ -36,15 +36,14 @@ public class PetitionPerson {
     }
 
     public Long getUser_Id() {
-        return signeeId;
+        return personId;
     }
 
     public void setUser_Id(Long user_Id) {
-        this.signeeId = user_Id;
+        this.personId = user_Id;
     }
 
     public Long getId() {
         return id;
     }
-
 }

@@ -14,9 +14,14 @@
                         <div class="card-header text-center">
                             <h2>Bartspetitions - List of Petitions</h2>
                         </div>
-                        <div class="card-body"></div>
+                        <div class="card-body">
+                            <p th:if="${search==null}" class="card-text">Below is the list of all current Petitions</p>
+                            <p th:if="${search!=null}" class="card-text">Below is the list of all Petitions with word <span th:text=""</p>
+                            <p class="card-text">Please pick from one of the options below.</p>
+                            Below i
+                        </div>
                         <div class="card-footer">
-                            <a th:href="@{/homePage}" class="btn btn-primary">Home Page</a>
+                            <a th:href="@{/}" class="btn btn-primary">Home Page</a>
                             <a th:href="@{/petitionSearch}" class="btn btn-info">Search for a Petition</a>
                             <a th:href="@{/petitionAdd}" class="btn btn-success">Add a New Petition</a>
                         </div>

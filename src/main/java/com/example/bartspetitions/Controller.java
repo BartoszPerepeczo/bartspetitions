@@ -1,8 +1,13 @@
 package com.example.bartspetitions;
 
 
+import com.example.bartspetitions.repository.PersonRepository;
+import com.example.bartspetitions.repository.PetitionPersonRepository;
+import com.example.bartspetitions.repository.PetitionRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.ArrayList;
@@ -11,12 +16,15 @@ import java.util.List;
 @org.springframework.stereotype.Controller
 public class Controller {
 
-    private final PetitionRepository pRepo;
-    //private SigneeRepository sRepo;
-    //private PetitionSigneeRepository psRepo;
+    private final PetitionRepository petition;
+    private final PersonRepository personRepository;
+    private PetitionPersonRepository petitionPersonRepository;
 
-    public Controller(PetitionRepository pRepo) {
-        this.pRepo = pRepo;
+    @Autowired
+    public Controller(PetitionRepository petition, PersonRepository personRepository, PetitionPersonRepository petitionPersonRepository) {
+        this.petition = petition;
+        this.personRepository = personRepository;
+        this.petitionPersonRepository = petitionPersonRepository;
     }
 
     @GetMapping("/")
@@ -29,8 +37,8 @@ public class Controller {
             @RequestParam(value = "message", required = false) String message,
             Model model
     ) {
-        List<Petition> petitions = new ArrayList<>();
-        pRepo.findAll().forEach(petitions::add);
+        List<com.example.bartspetitions.model.Petition> petitions = new ArrayList<>();
+        petition.findAll().forEach(petitions::add);
         model.addAttribute("list", petitions);
         //model.addAttribute("message", message);
         return "petitionList";
@@ -38,11 +46,20 @@ public class Controller {
 
     @GetMapping("/petitionList")
     public String petitionList(
-            @RequestParam(value = "message", required = false) String message,
+            @RequestParam(value = "search", required = false) String search,
             Model model
     ) {
-        List<Petition> petitions = new ArrayList<>();
-        pRepo.findAll().forEach(petitions::add);
+        List<com.example.bartspetitions.model.Petition> petitions = new ArrayList<>();
+        if (search != null) {
+            if (search.isEmpty()) {
+                petition.findAll().forEach(petitions::add);
+            } else {
+                petitions.addAll(petition.findByPetitionTitleContaining(search));
+            }
+        }
+        else {
+            petition.findAll().forEach(petitions::add);
+        }
         model.addAttribute("list", petitions);
         //model.addAttribute("message", message);
         return "petitionList";
@@ -53,8 +70,8 @@ public class Controller {
             @RequestParam(value = "message", required = false) String message,
             Model model
     ) {
-        List<Petition> petitions = new ArrayList<>();
-        pRepo.findAll().forEach(petitions::add);
+        List<com.example.bartspetitions.model.Petition> petitions = new ArrayList<>();
+        petition.findAll().forEach(petitions::add);
         model.addAttribute("list", petitions);
         //model.addAttribute("message", message);
         return "petitionList";
@@ -63,13 +80,26 @@ public class Controller {
 
     @GetMapping("/petitionSign")
     public String petitionSign(
-            @RequestParam(value = "id", required = true) String message,
+            @RequestParam(value = "id", required = true) String id,
             Model model
     ) {
-        List<Petition> petitions = new ArrayList<>();
-        pRepo.findAll().forEach(petitions::add);
-        model.addAttribute("list", petitions);
-        //model.addAttribute("message", message);
+        com.example.bartspetitions.model.Petition petition = this.petition.findById(Long.parseLong(id));
+
+        //List<Tuple> personIds = petitionPersonRepository.findByPetitionIdEquals(Long.parseLong(id));
+        //List<Person> person = petitionPersonRepository.findByPetitionIdEquals(Long.parseLong(id));
+        //String personString = person.toString();
+/*
+        if(!person.isEmpty()) {
+            for (Tuple t : personIds) {
+                person += t.toString();
+
+                //Long id = (Long) t.get(0);
+                //Long version = (Long) t.get(1);
+            }
+            //person.addAll(personRepository.findByIdIn(personIds));
+        }*/
+       // model.addAttribute("person", person);//.toString());
+        model.addAttribute("petition", petition);
         return "petitionSign";
     }
 }
