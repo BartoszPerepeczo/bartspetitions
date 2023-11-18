@@ -8,4 +8,5 @@ import java.util.List;
 
 public interface PetitionPersonRepository  extends CrudRepository<PetitionPerson, Long> {
     List<Person> findByPetitionIdEquals(long petitionId);
+    PetitionPerson findByPersonIdAndPetitionId(long personId, long petitionId);
 }

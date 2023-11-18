@@ -15,28 +15,32 @@
                             <h2>Bartspetitions - List of Petitions</h2>
                         </div>
                         <div class="card-body">
-                            <p th:if="${search==null}" class="card-text">Below is the list of all current Petitions</p>
-                            <p th:if="${search!=null}" class="card-text">Below is the list of all Petitions with word <span th:text=""</p>
+                            <p th:if="${search==''}" class="card-text">Below is the list of all current Petitions</p>
+                            <p th:if="${search!=''}" class="card-text">Below is the list of all Petition Title's containing <span th:text=${search}></span></p>
                             <p class="card-text">Please pick from one of the options below.</p>
-                            Below i
                         </div>
                         <div class="card-footer">
-                            <a th:href="@{/}" class="btn btn-primary">Home Page</a>
-                            <a th:href="@{/petitionSearch}" class="btn btn-info">Search for a Petition</a>
-                            <a th:href="@{/petitionAdd}" class="btn btn-success">Add a New Petition</a>
+                            <div class="container-fluid">
+                                <form class="form-inline" action="#" th:action="@{/petitionList}" method="get">
+                                    <a th:href="@{/}" class="btn btn-primary">Home</a>
+                                    <label for="searchString" class="m-2">Search</label>
+                                    <input name="search" type="text" class="m-2" id="searchString" placeholder="Search for..." th:value=${search}>
+                                    <button type="submit" value="Submit" class="btn btn-info m-2">Search for a Petition</button>
+                                    <a th:href="@{/petitionAdd}" class="btn btn-success m-2">Add a New Petition</a>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                    <div th:each="ob:${list}">
+                    <div th:each="petition:${petitions}">
                         <div class="card">
                             <div class="card-header text-centre">
-                                <h3 th:text=${ob.petitionTitle}></h3>
+                                <h3 th:text=${petition.petitionTitle}></h3>
                             </div>
                             <div class="card-body">
-                                <p th:text=${ob.petitionSummary}></p>
-
+                                <p th:text=${petition.petitionSummary}></p>
                             </div>
-                            <div class="card-footer bg-white text-success"> <!--th:if="${test!=null}">-->
-                                <a th:href="@{/petitionSign(id=${ob.id})}" class="btn btn-success">View Petition</a>
+                            <div class="card-footer bg-white text-success">
+                                <a th:href="@{/petitionSign(id=${petition.id})}" class="btn btn-success">View Petition</a>
                             </div>
                         </div>
                     </div>

@@ -19,7 +19,7 @@
                             <p class="card-text">On this website you can view all current petitions, sign those you agree with and even create your own.</p>
                             <p class="card-text">Please pick from one of the options below.</p>
                         </div>
-                        <div class="card-footer bg-white text-success"> <!--th:if="${test!=null}">-->
+                        <div class="card-footer">
                             <div class="container-fluid">
                                 <form class="form-inline" action="#" th:action="@{/petitionList}" method="get">
                                     <a th:href="@{/petitionList}" class="btn btn-info m-2">List All Petitions</a>
@@ -29,8 +29,6 @@
                                     <a th:href="@{/petitionAdd}" class="btn btn-success m-2">Add a New Petition</a>
                                 </form>
                             </div>
-                            <!--<a th:href="@{/petitionSearch}" class="btn btn-info">Search for a Petition</a>-->
-
                         </div>
                     </div>
                 </div>
