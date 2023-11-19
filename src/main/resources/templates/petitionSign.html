@@ -38,9 +38,9 @@
                     </div>
                     <div class="card-body">
                         <p class="card-text" th:text=${petition.petitionText}></p>
-                        <p class="card-text">
+                        <p class="card-text" th:if="${signees!=''}">
                             <small class="text-muted">Signed By:</small>
-                            <small th:text=${person}></small>
+                            <small th:text=${signees}></small>
                         </p>
                     </div>
                     <div class="card-footer bg-white text-success">

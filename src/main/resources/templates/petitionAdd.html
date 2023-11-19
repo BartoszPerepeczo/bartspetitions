@@ -32,18 +32,30 @@
                 </div>
                 <div class="card">
                     <form class="form" action="#" th:action="@{/petitionAdd}" method="post">
-                        <div class="form-group">
-                            <label for="petitionTitle" class="m-2">Petition Name</label>
-                            <input name="petitionTitle" type="text" class="m-2" id="petitionTitle" placeholder="Type in name...">
-                            <label for="petitionSummary" class="m-2">Petition Summary</label>
-                            <textarea name="petitionSummary" class="m-2" id="petitionSummary" placeholder="Type in summary..."></textarea>
-                            <label for="petitionText" class="m-2">Petition Summary</label>
-                            <textarea name="petitionText" class="m-2" id="petitionText" placeholder="Type in summary..."></textarea>
-                            <label for="personName" class="m-2">Name:</label>
-                            <input name="personName" type="text" class="m-2" id="personName" placeholder="Name...">
-                            <label for="personEmail" class="m-2">Name:</label>
-                            <input name="personEmail" type="text" class="m-2" id="personEmail" placeholder="Email...">
-                            <button type="submit" value="Submit" class="btn btn-info m-2">Submit this Petition</button>
+                        <div class="card-body">
+                            <div class="form-group">
+                                <label for="petitionTitle" class="form-label m-2">Petition Title</label>
+                                <input name="petitionTitle" type="text" class="form-control form-control-lg mb-2" id="petitionTitle" placeholder="Type in name...">
+                            </div>
+                            <div class="form-group">
+                                <label for="petitionSummary" class="form-label m-2">Petition Short Summary</label>
+                                <textarea name="petitionSummary" rows="3" class="form-control mb-2" id="petitionSummary" placeholder="Type in petition summary..."></textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="petitionText" class="form-label m-2">Petition Text</label>
+                                <textarea name="petitionText" rows="6" class="form-control mb-2" id="petitionText" placeholder="Type in petition text..."></textarea>
+                            </div>
+                            <div class="form-inline">
+                                <div class="container-fluid">
+                                    <label for="personName" class="form-label m-2">Your Name:</label>
+                                    <input name="personName" type="text" class="form-control mb-2" id="personName" placeholder="Name...">
+                                    <label for="personEmail" class="form-label m-2">Your Email:</label>
+                                    <input name="personEmail" type="text" class="form-control mb-2" id="personEmail" placeholder="Email...">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <button type="submit" value="Submit" class="btn btn-success mb-2">Submit this Petition</button>
                         </div>
                     </form>
                 </div>

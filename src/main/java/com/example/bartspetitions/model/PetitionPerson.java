@@ -24,23 +24,23 @@ public class PetitionPerson {
     @Override
     public String toString() {
         return String.format(
-                "PetitionPerson[Id=%d, petition_Id=%d, user_Id='%d']",
+                "PetitionPerson[Id=%d, petitionId=%d, userId=%d]",
                 id, petitionId, personId);
     }
-    public Long getPetition_Id() {
+    public Long getPetitionId() {
         return petitionId;
     }
 
-    public void setPetition_Id(Long petition_Id) {
-        this.petitionId = petition_Id;
+    public void setPetitionId(Long petitionId) {
+        this.petitionId = petitionId;
     }
 
-    public Long getUser_Id() {
+    public Long getPersonId() {
         return personId;
     }
 
-    public void setUser_Id(Long user_Id) {
-        this.personId = user_Id;
+    public void setPersonId(Long personId) {
+        this.personId = personId;
     }
 
     public Long getId() {

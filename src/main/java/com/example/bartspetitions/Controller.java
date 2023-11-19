@@ -3,6 +3,7 @@ package com.example.bartspetitions;
 
 import com.example.bartspetitions.model.*;
 import com.example.bartspetitions.repository.*;
+import jakarta.persistence.Tuple;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -96,46 +97,56 @@ public class Controller {
             @RequestParam(value = "id", required = true) String id,
             Model model
     ) {
-        Petition petition = this.petitionRepository.findById(Long.parseLong(id));
-
-        //List<Tuple> personIds = petitionPersonRepository.findByPetitionIdEquals(Long.parseLong(id));
-        //List<Person> person = petitionPersonRepository.findByPetitionIdEquals(Long.parseLong(id));
-        //String personString = person.toString();
-/*
-        if(!person.isEmpty()) {
-            for (Tuple t : personIds) {
-                person += t.toString();
-
-                //Long id = (Long) t.get(0);
-                //Long version = (Long) t.get(1);
-            }
-            //person.addAll(personRepository.findByIdIn(personIds));
-        }*/
-       // model.addAttribute("person", person);//.toString());
+        Petition petition = petitionRepository.findById(Long.parseLong(id));
+        model.addAttribute("signees", getSigneesString(petition));
         model.addAttribute("petition", petition);
         return "petitionSign";
     }
 
     @PostMapping("/petitionSign")
-    public ModelAndView petitionSign(
+    public String petitionSign(
+    //public ModelAndView petitionSign(
             @RequestParam(value = "id", required = true) String id,
             @RequestParam(value = "personName", required = false) String personName,
             @RequestParam(value = "personEmail", required = false) String personEmail,
             Model model
     ) {
-        Petition petition = this.petitionRepository.findById(Long.parseLong(id));
+        Petition petition = petitionRepository.findById(Long.parseLong(id));
         Person person = personRepository.findByPersonNameAndPersonEmail(personName,personEmail);
         if (person==null) {
             personRepository.save(new Person(personName,personEmail));
             person = personRepository.findByPersonNameAndPersonEmail(personName,personEmail);
         }
-        petitionPersonRepository.save(new PetitionPerson(Long.parseLong(id), person.getId()));
+        if (petitionPersonRepository.findByPetitionIdAndPersonId(Long.parseLong(id),person.getId())==null) {
+            petitionPersonRepository.save(new PetitionPerson(Long.parseLong(id), person.getId()));
+        }
 
+        model.addAttribute("signees", getSigneesString(petition));
         model.addAttribute("petition", petition);
         model.addAttribute("personName", personName);
         model.addAttribute("personEmail", personEmail);
 
-        return new ModelAndView("petitionSign");
+        return "petitionSign";
+        //return new ModelAndView("petitionSign");
     }
 
+    private String getSigneesString(Petition petition) {
+
+        List<PetitionPerson> petitionPerson = petitionPersonRepository.findByPetitionIdEquals(petition.getId());
+        List<Long> personId = new ArrayList<>();
+        String personString = "";
+
+        if(!petitionPerson.isEmpty()) {
+            for (PetitionPerson pp : petitionPerson) {
+                personId.add(pp.getPersonId());
+            }
+            List<Person> person = personRepository.findByIdIn(personId);
+            personString = person.toString();
+            personString = personString.substring(1,personString.length()-1);
+            return personString;
+        }
+        else {
+            return "";
+        }
+    }
 }
