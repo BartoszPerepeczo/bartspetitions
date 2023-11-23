@@ -1,12 +1,13 @@
 package com.example.bartspetitions.repository;
 
-import java.util.List;
-
+import com.example.bartspetitions.model.Petition;
 import org.springframework.data.repository.CrudRepository;
 
-public interface PetitionRepository extends CrudRepository<com.example.bartspetitions.model.Petition, Long> {
+import java.util.List;
 
-    List<com.example.bartspetitions.model.Petition> findByPetitionTitleContaining(String petitionTitle);
+public interface PetitionRepository extends CrudRepository<Petition, Long> {
 
-    com.example.bartspetitions.model.Petition findById(long id);
+    List<Petition> findByPetitionTitleContaining(String petitionTitle);
+    Petition findById(long id);
+
 }

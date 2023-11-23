@@ -12,13 +12,9 @@ import org.springframework.context.annotation.Bean;
 @SpringBootApplication
 public class BartspetitionsApplication {
 
-	//private static final Logger log = LoggerFactory.getLogger(BartspetitionsApplication.class);
-
 	public static void main(String[] args) {
 		SpringApplication.run(BartspetitionsApplication.class, args);
 	}
-
-
 
 	@Bean
 	public CommandLineRunner demo(PetitionRepository petition, PersonRepository person, PetitionPersonRepository petitionPersonRepository) {

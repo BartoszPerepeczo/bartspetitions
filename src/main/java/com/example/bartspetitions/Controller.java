@@ -3,7 +3,6 @@ package com.example.bartspetitions;
 
 import com.example.bartspetitions.model.*;
 import com.example.bartspetitions.repository.*;
-import jakarta.persistence.Tuple;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 import java.util.ArrayList;
 import java.util.List;
